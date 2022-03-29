@@ -14,13 +14,13 @@ class User extends CI_Controller {
 		$this->load->view('registration.php',$result);
 	}
 	public function insertData(){
-		$hobbies = implode(',',$this->input->post('hob'));
+		$hobbies = implode(',',html_escape($this->security->xss_clean($this->input->post('hob'))));
 		$data = array(
-			'name' => $this->input->post('name'),
-			'salary'=> $this->input->post('sal'),
+			'name' => html_escape($this->security->xss_clean($this->input->post('name'))),
+			'salary'=> html_escape($this->security->xss_clean($this->input->post('sal'))),
 			'hobbies' => $hobbies,
-			'dept_id' => $this->input->post('dept'),
-			'gender' => $this->input->post('gen'),
+			'dept_id' => html_escape($this->security->xss_clean($this->input->post('dept'))),
+			'gender' => html_escape($this->security->xss_clean($this->input->post('gen'))),
 		);
 		$response = $this->user_model->insertData($data);
 		if($response){
